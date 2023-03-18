@@ -30,7 +30,7 @@ weighted avg     0.9051    0.9010    0.9018       495
 
 混淆矩阵:
 
-![混淆矩阵]()
+![混淆矩阵](https://raw.githubusercontent.com/percent4/pytorch_transformer_chinese_text_classification/master/image/confusion_matrix.png)
 
 在新样本上的表现:
 
