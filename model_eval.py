@@ -6,11 +6,15 @@
 import torch as T
 import numpy as np
 import pandas as pd
-from sklearn.metrics import classification_report
+from sklearn.metrics import classification_report, confusion_matrix
 import torch.nn.functional as F
+import matplotlib.pyplot as plt
 
 from model import TextClassifier
 from text_featuring import load_file_file, text_feature
+
+from matplotlib import rcParams
+rcParams['font.family'] = 'SimHei'
 
 model = T.load('sougou_mini_cls.pth')
 
@@ -41,3 +45,20 @@ if __name__ == '__main__':
         pred_label.append(eval(row['content']))
 
     print(classification_report(true_label, pred_label, digits=4))
+    # 绘制混淆矩阵
+    label_names = list(label_dict.keys())
+    C = confusion_matrix(true_label, pred_label, labels=label_names)
+
+    plt.matshow(C, cmap=plt.cm.Reds)  # 根据最下面的图按自己需求更改颜色
+
+    for i in range(len(C)):
+        for j in range(len(C)):
+            plt.annotate(C[j, i], xy=(i, j), horizontalalignment='center', verticalalignment='center')
+
+    num_local = np.array(range(len(label_names)))
+    plt.xticks(num_local, label_names, rotation=90)  # 将标签印在x轴坐标上
+    plt.yticks(num_local, label_names)  # 将标签印在y轴坐标上
+    plt.ylabel('真实标签')
+    plt.xlabel('预测标签')
+    # plt.show()
+    plt.savefig("./image/confusion_matrix.png")
