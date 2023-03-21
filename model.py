@@ -8,6 +8,7 @@ import torch
 import torch.nn as nn
 
 from params import NUM_WORDS, EMBEDDING_SIZE
+from get_pretrained_vector import pretrained_vector
 
 
 # https://pytorch.org/tutorials/beginner/transformer_tutorial.html
@@ -51,7 +52,8 @@ class TextClassifier(nn.Module):
         assert d_model % nhead == 0, "nheads must divide evenly into d_model"
 
         # Embedding layer definition
-        self.emb = nn.Embedding(vocab_size, d_model, padding_idx=0)
+        # self.emb = nn.Embedding(vocab_size, d_model, padding_idx=0)
+        self.emb = nn.Embedding.from_pretrained(pretrained_vector, freeze=False, padding_idx=0)
 
         self.pos_encoder = PositionalEncoding(
             d_model=d_model,

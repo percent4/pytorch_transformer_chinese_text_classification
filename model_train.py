@@ -72,7 +72,7 @@ class ModelTrainer(object):
 
 
 if __name__ == '__main__':
-    model = TextClassifier(nhead=8,             # number of heads in the multi-head-attention models
+    model = TextClassifier(nhead=10,             # number of heads in the multi-head-attention models
                            dim_feedforward=128,  # dimension of the feedforward network model in nn.TransformerEncoder
                            num_layers=1,
                            dropout=0.0,
@@ -82,4 +82,3 @@ if __name__ == '__main__':
     print(num_params)
     ModelTrainer().train(model)
     torch.save(model, 'sougou_mini_cls.pth')
-    # Test accuracy: 0.75195
